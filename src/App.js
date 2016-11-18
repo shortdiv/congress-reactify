@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import config from './config.json'
 
-class App extends Component{
+export default class App extends Component{
   render() {
     console.log('good day')
       console.log('guten tag')
@@ -10,5 +10,3 @@ class App extends Component{
     );
   }
 }
-
-export default App

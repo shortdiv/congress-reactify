@@ -2,7 +2,9 @@ var webpack = require('webpack'),
     path = require('path');
 
 module.exports = {
+  devtool: 'eval',
   entry: [
+    "webpack-hot-middleware/client",
     "./src/index"
   ],
   output: {
@@ -10,18 +12,18 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
   module: {
     loaders: [{
-      test: [/\.js$/],
+      test: /\.js$/,
       loaders: ['react-hot/webpack', 'babel'],
       include: path.join(__dirname, 'src')
     },
     {
-      test: [/\.json$/],
-      loaders: ['json'],
+      test: /\.json$/,
+      loaders: ['json']
     }]
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+  }
 }
