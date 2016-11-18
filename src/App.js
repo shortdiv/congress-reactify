@@ -3,7 +3,8 @@ import config from './config.json'
 
 class App extends Component{
   render() {
-    console.log('goodbye')
+    console.log('good day')
+      console.log('guten tag')
     return (
       <div>{config.someText}</div>    
     );
