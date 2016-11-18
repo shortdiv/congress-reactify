@@ -1,12 +1,11 @@
-import React, {Component} from 'react'
 import config from './config.json'
 
-export default class App extends Component{
-  render() {
-    console.log('good day')
-      console.log('guten tag')
+var CongressMan = React.createClass({
+  render: function() {
     return (
-      <div>{config.someText}</div>    
+      <div>{this.props.name}</div>
     );
   }
-}
+})
+
+export default CongressMan
