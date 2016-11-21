@@ -9,15 +9,15 @@ var CongressMan = React.createClass({
   },
   componentDidMount: function() {
     this.serverRequest = new XMLHttpRequest();
-    this.serverRequest.open('GET', 'https://api.propublica.org/congress/v1/114/senate/members.json', false);
-    this.serverRequest.setRequestHeader("X-API-Key", process.env.congress);
+    this.serverRequest.open('GET', 'https://api.propublica.org/congress/v1/members/' + this.props.id + '.json', false);
+    this.serverRequest.setRequestHeader("X-API-Key", __CONGRESS__);
     this.serverRequest.send()
     if(this.serverRequest.status === 200) {
       var data = JSON.parse(this.serverRequest.responseText).results[0]
         this.data = data;
       this.setState({
-        firstName: data.chamber,
-        lastName: data.congress
+        firstName: data.first_name,
+        lastName: data.last_name
       })
     }
   },

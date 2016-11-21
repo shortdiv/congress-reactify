@@ -1,5 +1,15 @@
 var webpack = require('webpack'),
-    path = require('path');
+    path = require('path'),
+    dotenv = require('dotenv');
+
+    env = dotenv.config();
+    //courtesy of https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/#configuring-multiple-environments//
+    var envVars =
+      Object.keys(env).reduce((memo, key) => {
+        const val = JSON.stringify(env[key]);
+        memo[`__${key.toUpperCase()}__`] = val;
+        return memo;
+      },{});
 
 module.exports = {
   devtool: 'eval',
@@ -16,7 +26,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       'React': 'react'
-    })
+    }),
+    new webpack.DefinePlugin(envVars)
   ],
   module: {
     loaders: [{
