@@ -1,4 +1,5 @@
 import config from './config.json'
+import styles from './style.css'
 
 var CongressMan = React.createClass({
   getInitialState: function() {
@@ -8,6 +9,7 @@ var CongressMan = React.createClass({
       party: '',
       startDate: '',
       endDate: '',
+      partyAffiliation: '',
       imageURL: 'https://www.congress.gov/img/member/'
     };
   },
@@ -25,6 +27,7 @@ var CongressMan = React.createClass({
       this.setState({
         firstName: data.first_name,
         lastName: data.last_name,
+        partyAffiliation: this._printPartyName(data.current_party),
         imageURL: this.state.imageURL + this.props.id.toLowerCase() + '.jpg',
         startDate: dates[0],
         endDate: dates[dates.length - 1]
@@ -34,19 +37,6 @@ var CongressMan = React.createClass({
   componentWillUnmount: function() {
     this.serverRequest.abort();
   },
-  render: function() {
-    return (
-      <div>
-        <figure>
-          <img src={this.state.imageURL} />
-          <figcaption>{this.state.firstName} {this.state.lastName}</figcaption>
-        </figure>
-        <div>
-          <p>{this.state.startDate} - {this.state.endDate}</p>
-        </div>
-      </div>
-    );
-  },
   _getDates: function(roles) {
     var dates = [];
     roles.map(function(role) {
@@ -55,6 +45,25 @@ var CongressMan = React.createClass({
     })
     dates.sort();
     return dates;
+  },
+  _printPartyName: function(partyChar) {
+    return partyChar === 'R' ? 'Republican' : 'Democrat'
+  },
+  render: function() {
+    return (
+      <div className='congressMan'>
+      <a href="">
+        <figure>
+          <img src={this.state.imageURL} />
+          <figcaption>{this.state.firstName} {this.state.lastName}</figcaption>
+        </figure>
+        <div>
+          <p>{this.state.partyAffiliation}</p>
+          <p>{this.state.startDate} - {this.state.endDate}</p>
+        </div>
+      </a>
+      </div>
+    );
   }
 })
 
