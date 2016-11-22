@@ -1,5 +1,4 @@
 import 'whatwg-fetch'
-import styles from './Congressman.css'
 
 class CongressMan extends React.Component {
   constructor(props) {
