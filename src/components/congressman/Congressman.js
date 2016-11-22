@@ -6,7 +6,6 @@ class CongressMan extends React.Component {
     this.state = {
       firstName: '',
       lastName: '',
-      party: '',
       startDate: '',
       endDate: '',
       partyAffiliation: '',
