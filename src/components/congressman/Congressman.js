@@ -1,6 +1,5 @@
 import 'whatwg-fetch'
-import config from './config.json'
-import styles from './style.css'
+import styles from './Congressman.css'
 
 class CongressMan extends React.Component {
   constructor(props) {
@@ -62,6 +61,7 @@ class CongressMan extends React.Component {
   componentWillUnmount() {
     this.serverRequest.abort();
   }
+
   _getDates(roles) {
     var dates = [];
     roles.map(function(role) {
@@ -71,9 +71,11 @@ class CongressMan extends React.Component {
     dates.sort();
     return dates;
   }
+
   _printPartyName(partyChar) {
     return partyChar === 'R' ? 'Republican' : 'Democrat'
   }
+
   render() {
     return (
       <div className='congressMan'>
