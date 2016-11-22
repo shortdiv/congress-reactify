@@ -1,3 +1,4 @@
+import 'whatwg-fetch'
 import config from './config.json'
 import styles from './style.css'
 
@@ -12,32 +13,52 @@ class CongressMan extends React.Component {
       endDate: '',
       partyAffiliation: '',
       currentRole: '',
-      imageURL: 'https://www.congress.gov/img/member/'
+      imageURL: ''
     }
   }
 
   componentDidMount() {
-    this.serverRequest = new XMLHttpRequest();
-    this.serverRequest.open('GET', 'https://api.propublica.org/congress/v1/members/' + this.props.id + '.json', false);
-    this.serverRequest.setRequestHeader("X-API-Key", __CONGRESS__);
-    this.serverRequest.send()
-    if(this.serverRequest.status === 200) {
-      var data = JSON.parse(this.serverRequest.responseText).results[0],
-          dates = this._getDates(data.roles);
+    var that = this;
+    function checkStatus(response) {
+      if(response.status >= 200 && response.status < 300) {
+        return response
+      } else {
+        var error = new Error(response.statusText);
+        error.response = response
+        throw error
+      }
+    }
 
-      this.data = data;
+    function parseJson(response) {
+      return response.json()
+    }
 
-      this.setState({
+    fetch('https://api.propublica.org/congress/v1/members/' + that.props.id + '.json',
+    {
+      method: 'GET',
+      headers: { 'X-API-Key': __CONGRESS__ }
+    })
+    .then(checkStatus)
+    .then(parseJson)
+    .then(function(resJson) {
+      var data = resJson.results[0];
+      that.data = data;
+
+      that.setState({
         firstName: data.first_name,
         lastName: data.last_name,
-        partyAffiliation: this._printPartyName(data.current_party),
-        imageURL: this.state.imageURL + this.props.id.toLowerCase() + '.jpg',
-        startDate: dates[0],
-        endDate: dates[dates.length - 1],
+        partyAffiliation: that._printPartyName(data.current_party),
+        imageURL: 'https://www.congress.gov/img/member/' + that.props.id.toLowerCase() + '.jpg',
+        dates: that._getDates(data.roles),
+        startDate: that._getDates(data.roles)[0],
+        endDate: that._getDates(data.roles)[that._getDates(data.roles).length - 1],
         currentRole: data.roles[0].congress + "th " + data.roles[0].chamber
       })
-    }
+    }).catch(function(err) {
+      console.log("Request failed with " + err)
+    })
   }
+
   componentWillUnmount() {
     this.serverRequest.abort();
   }

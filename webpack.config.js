@@ -14,6 +14,7 @@ var webpack = require('webpack'),
 module.exports = {
   devtool: 'eval',
   entry: [
+    "whatwg-fetch",
     "webpack-hot-middleware/client",
     "./src/index"
   ],
