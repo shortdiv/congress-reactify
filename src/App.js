@@ -1,9 +1,10 @@
 import config from './config.json'
 import styles from './style.css'
 
-var CongressMan = React.createClass({
-  getInitialState: function() {
-    return {
+class CongressMan extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       firstName: '',
       lastName: '',
       party: '',
@@ -12,9 +13,10 @@ var CongressMan = React.createClass({
       partyAffiliation: '',
       currentRole: '',
       imageURL: 'https://www.congress.gov/img/member/'
-    };
-  },
-  componentDidMount: function() {
+    }
+  }
+
+  componentDidMount() {
     this.serverRequest = new XMLHttpRequest();
     this.serverRequest.open('GET', 'https://api.propublica.org/congress/v1/members/' + this.props.id + '.json', false);
     this.serverRequest.setRequestHeader("X-API-Key", __CONGRESS__);
@@ -35,11 +37,11 @@ var CongressMan = React.createClass({
         currentRole: data.roles[0].congress + "th " + data.roles[0].chamber
       })
     }
-  },
-  componentWillUnmount: function() {
+  }
+  componentWillUnmount() {
     this.serverRequest.abort();
-  },
-  _getDates: function(roles) {
+  }
+  _getDates(roles) {
     var dates = [];
     roles.map(function(role) {
       dates.push(role.start_date);
@@ -47,11 +49,11 @@ var CongressMan = React.createClass({
     })
     dates.sort();
     return dates;
-  },
-  _printPartyName: function(partyChar) {
+  }
+  _printPartyName(partyChar) {
     return partyChar === 'R' ? 'Republican' : 'Democrat'
-  },
-  render: function() {
+  }
+  render() {
     return (
       <div className='congressMan'>
       <a href="" className="tag">
@@ -69,6 +71,6 @@ var CongressMan = React.createClass({
       </div>
     );
   }
-})
+}
 
 export default CongressMan
