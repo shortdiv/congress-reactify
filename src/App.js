@@ -10,6 +10,7 @@ var CongressMan = React.createClass({
       startDate: '',
       endDate: '',
       partyAffiliation: '',
+      currentRole: '',
       imageURL: 'https://www.congress.gov/img/member/'
     };
   },
@@ -30,7 +31,8 @@ var CongressMan = React.createClass({
         partyAffiliation: this._printPartyName(data.current_party),
         imageURL: this.state.imageURL + this.props.id.toLowerCase() + '.jpg',
         startDate: dates[0],
-        endDate: dates[dates.length - 1]
+        endDate: dates[dates.length - 1],
+        currentRole: data.roles[0].congress + "th " + data.roles[0].chamber
       })
     }
   },
@@ -52,14 +54,16 @@ var CongressMan = React.createClass({
   render: function() {
     return (
       <div className='congressMan'>
-      <a href="">
+      <a href="" className="tag">
         <figure>
           <img src={this.state.imageURL} />
-          <figcaption>{this.state.firstName} {this.state.lastName}</figcaption>
+          <figcaption></figcaption>
         </figure>
-        <div>
-          <p>{this.state.partyAffiliation}</p>
-          <p>{this.state.startDate} - {this.state.endDate}</p>
+        <div className="stats">
+          <p>{this.state.firstName} {this.state.lastName}</p>
+          <p>Party: {this.state.partyAffiliation}</p>
+          <p>Currently Serving: {this.state.currentRole}</p>
+          <p> Years of Service: {this.state.startDate} - {this.state.endDate}</p>
         </div>
       </a>
       </div>

@@ -1,0 +1,31 @@
+figure {
+  margin: 0;
+  padding: 1em;
+  display: inline-block;
+  width: 28%;
+  height: 225px;
+}
+
+  figcaption {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 1.5em;
+  }
+.congressMan {
+  background-color: #dde1e2;
+  box-shadow: #bdc3c7 0 5px 5px;
+  border-radius: 8px;
+  width: 40em;
+}
+
+.tag {
+    text-decoration: none !important;
+}
+
+.stats {
+  width: 67%;
+  display: inline-block;
+  vertical-align: top;
+  color: black;
+}
+
