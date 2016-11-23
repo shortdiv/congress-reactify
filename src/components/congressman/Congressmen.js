@@ -51,7 +51,7 @@ class CongressMen extends React.Component {
     return (
       <div>
         {this.state.members.map(function(member, i) {
-          return <CongressMan id={member.id} key={i} />
+          return <CongressMan id={member.id} senior={member.seniority} key={i} />
         })
         }
       </div>
