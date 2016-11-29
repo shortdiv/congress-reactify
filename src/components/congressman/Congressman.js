@@ -6,10 +6,7 @@ class CongressMan extends React.Component {
     this.state = {
       firstName: '',
       lastName: '',
-      startDate: '',
-      endDate: '',
       partyAffiliation: '',
-      currentRole: '',
       seniority: '',
       imageURL: ''
     }
@@ -47,10 +44,6 @@ class CongressMan extends React.Component {
         lastName: data.last_name,
         partyAffiliation: that._printPartyName(data.current_party),
         imageURL: 'https://www.congress.gov/img/member/' + that.props.id.toLowerCase() + '.jpg',
-        dates: that._getDates(data.roles),
-        startDate: that._getDates(data.roles)[0],
-        endDate: that._getDates(data.roles)[that._getDates(data.roles).length - 1],
-        currentRole: data.roles[0].congress + "th " + data.roles[0].chamber,
         seniority: that.props.senior
       })
     }).catch(function(err) {
@@ -87,9 +80,7 @@ class CongressMan extends React.Component {
         <div className="stats">
           <p>{this.state.firstName} {this.state.lastName}</p>
           <p>Party: {this.state.partyAffiliation}</p>
-          <p>Currently Serving: {this.state.currentRole}</p>
           <p>Seniority: {this.state.seniority}</p>
-          <p> Years of Service: {this.state.startDate} - {this.state.endDate}</p>
         </div>
       </a>
       </div>

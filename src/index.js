@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import CongressMen from './components/congressman/congressmen';
+import App from './components/App';
 require('!style!css!sass!./styles/main.scss');
 
-ReactDOM.render(<CongressMen />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
