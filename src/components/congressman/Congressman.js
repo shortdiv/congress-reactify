@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom'
 import 'whatwg-fetch'
 
 class CongressMan extends React.Component {
@@ -6,67 +7,23 @@ class CongressMan extends React.Component {
     this.state = {
       firstName: '',
       lastName: '',
-      partyAffiliation: '',
+      party: '',
       seniority: '',
-      imageURL: ''
     }
   }
 
   componentDidMount() {
-    var that = this;
-    function checkStatus(response) {
-      if(response.status >= 200 && response.status < 300) {
-        return response
-      } else {
-        var error = new Error(response.statusText);
-        error.response = response
-        throw error
-      }
-    }
-
-    function parseJson(response) {
-      return response.json()
-    }
-
-    fetch('https://api.propublica.org/congress/v1/members/' + that.props.id + '.json',
-    {
-      method: 'GET',
-      headers: { 'X-API-Key': __CONGRESS__ }
-    })
-    .then(checkStatus)
-    .then(parseJson)
-    .then(function(resJson) {
-      var data = resJson.results[0];
-      that.data = data;
-
-      that.setState({
-        firstName: data.first_name,
-        lastName: data.last_name,
-        partyAffiliation: that._printPartyName(data.current_party),
-        imageURL: 'https://www.congress.gov/img/member/' + that.props.id.toLowerCase() + '.jpg',
-        seniority: that.props.senior
-      })
-    }).catch(function(err) {
-      console.log("Request failed with " + err)
+    this.setState({
+      firstName: this.props.info.first_name,
+      lastName: this.props.info.last_name,
+      party: this.props.info.party,
+      seniority: this.props.info.seniority,
+      imageURL: 'https://www.congress.gov/img/member/' + this.props.info.id.toLowerCase() + '.jpg',
     })
   }
 
   componentWillUnmount() {
-    this.serverRequest.abort();
-  }
-
-  _getDates(roles) {
-    var dates = [];
-    roles.map(function(role) {
-      dates.push(role.start_date);
-      dates.push(role.end_date);
-    })
-    dates.sort();
-    return dates;
-  }
-
-  _printPartyName(partyChar) {
-    return partyChar === 'R' ? 'Republican' : 'Democrat'
+    console.log('unmount!')
   }
 
   render() {
@@ -79,7 +36,7 @@ class CongressMan extends React.Component {
         </figure>
         <div className="stats">
           <p>{this.state.firstName} {this.state.lastName}</p>
-          <p>Party: {this.state.partyAffiliation}</p>
+          <p>Party: {this.state.party}</p>
           <p>Seniority: {this.state.seniority}</p>
         </div>
       </a>

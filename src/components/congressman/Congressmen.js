@@ -4,7 +4,6 @@ class CongressMen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      republicansOnly: false,
       'members': []
     }
   }
@@ -49,22 +48,23 @@ class CongressMen extends React.Component {
   }
 
   render() {
-    var republicansOnly = this.state.republicansOnly
+    var rows= []
 
-    return (
-        <div>
-        {this.state.members.map(function(member, republicansOnly, i) {
-          if(republicansOnly) {
-            if(member.party = 'R') {
-              return <CongressMan id={member.id} senior={member.seniority} key={i} />
-            }
-          } else {
-            return <CongressMan id={member.id} senior={member.seniority} key={i} />
-          }
-        })
+    if(!!this.state.members.length) {
+      var republicansOnly = this.props.republicansOnly
+      this.state.members.map(function(member, index) {
+        if(republicansOnly && member.party == 'D') {
+          //do nothing
+        } else {
+          rows.push(<CongressMan info={member} key={index}/>)
         }
-        </div>
-        )
+      })
+    }
+    return (
+      <div>
+        {rows}
+      </div>
+    );
   }
 }
 
